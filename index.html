@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selamat Tidur, Sayangkuuu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-deep: #0b1230;
+    --sky-mid: #171d47;
+    --sky-horizon: #2c2560;
+    --moon: #f7e2b0;
+    --moon-glow: #fff3d4;
+    --starlight: #f7f5ff;
+    --lavender: #cdbdf0;
+    --blush: #f3c8d4;
+    --text-soft: #e9e6f7;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    background: var(--sky-deep);
+    overflow-x:hidden;
+    font-family:'Quicksand', sans-serif;
+  }
+
+  .stage{
+    position:relative;
+    min-height:100vh;
+    width:100%;
+    background: radial-gradient(ellipse at 50% 120%, var(--sky-horizon) 0%, var(--sky-mid) 45%, var(--sky-deep) 100%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 6vh 6vw;
+    overflow:hidden;
+  }
+
+  /* Stars */
+  #starfield{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .star{
+    position:absolute;
+    background: var(--starlight);
+    border-radius:50%;
+    animation: twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0.15; transform:scale(0.8); }
+    50%{ opacity:1; transform:scale(1.15); }
+  }
+
+  /* Shooting star */
+  .shooting-star{
+    position:absolute;
+    top:10%;
+    left:-10%;
+    width:2px;
+    height:2px;
+    background: transparent;
+    z-index:1;
+  }
+  .shooting-star::before{
+    content:'';
+    position:absolute;
+    width:120px;
+    height:2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.95), transparent);
+    transform: rotate(18deg);
+    filter: drop-shadow(0 0 6px #fff);
+  }
+  .shooting-star{
+    animation: shoot 7s linear infinite;
+    animation-delay: 3s;
+  }
+  @keyframes shoot{
+    0%{ transform: translate(0,0); opacity:0; }
+    3%{ opacity:1; }
+    18%{ transform: translate(60vw, 22vh); opacity:0; }
+    100%{ transform: translate(60vw, 22vh); opacity:0; }
+  }
+
+  /* Moon */
+  .moon-wrap{
+    position:absolute;
+    top:6vh;
+    right:8vw;
+    z-index:1;
+    cursor:pointer;
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform: translateY(0px); }
+    50%{ transform: translateY(-14px); }
+  }
+  .moon{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 32%, #fffdf3, var(--moon) 55%, #e8c584 100%);
+    box-shadow:
+      0 0 40px 10px rgba(247,226,176,0.35),
+      0 0 90px 30px rgba(247,226,176,0.15);
+    position:relative;
+  }
+  .moon::after{
+    content:'';
+    position:absolute;
+    top:18px; left:22px;
+    width:20px; height:20px;
+    border-radius:50%;
+    background: rgba(210,180,120,0.35);
+    box-shadow: 34px 20px 0 -4px rgba(210,180,120,0.25), 10px 46px 0 -6px rgba(210,180,120,0.3);
+  }
+  .moon-hint{
+    text-align:center;
+    color: var(--lavender);
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin-top:10px;
+    opacity:0.6;
+  }
+
+  /* Clouds */
+  .cloud{
+    position:absolute;
+    background: rgba(230,225,255,0.06);
+    border-radius:100px;
+    filter: blur(1px);
+    z-index:0;
+    animation: drift linear infinite;
+  }
+  @keyframes drift{
+    from{ transform: translateX(-10vw); }
+    to{ transform: translateX(110vw); }
+  }
+
+  /* Fireflies / floating hearts, subtle */
+  .firefly{
+    position:absolute;
+    bottom:-5%;
+    font-size: 14px;
+    opacity:0;
+    z-index:1;
+    animation: rise linear infinite;
+    color: var(--blush);
+  }
+  @keyframes rise{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.85; }
+    90%{ opacity:0.5; }
+    100%{ transform: translateY(-105vh) translateX(20px) rotate(15deg); opacity:0; }
+  }
+
+  /* Content card */
+  .content{
+    position:relative;
+    z-index:2;
+    max-width:560px;
+    width:100%;
+    text-align:center;
+    color: var(--text-soft);
+    animation: rise-in 1.4s ease-out both;
+  }
+  @keyframes rise-in{
+    from{ opacity:0; transform: translateY(24px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color: var(--lavender);
+    opacity:0.75;
+    margin-bottom: 18px;
+  }
+
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+    line-height:1.1;
+    margin: 0 0 8px 0;
+    background: linear-gradient(180deg, #ffffff, var(--lavender));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .subtitle{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size: clamp(1.3rem, 3.2vw, 1.7rem);
+    color: var(--blush);
+    margin: 0 0 30px 0;
+    font-weight:500;
+  }
+
+  .message{
+    font-size: 16px;
+    line-height:1.9;
+    color: rgba(233,230,247,0.85);
+    margin: 0 auto 34px auto;
+    max-width: 460px;
+    font-weight:300;
+  }
+
+  .divider{
+    width:60px;
+    height:1px;
+    background: linear-gradient(90deg, transparent, var(--lavender), transparent);
+    margin: 0 auto 30px auto;
+    opacity:0.5;
+  }
+
+  /* Interactive: reveal note */
+  .reveal-btn{
+    background: rgba(205,189,240,0.08);
+    border: 1px solid rgba(205,189,240,0.35);
+    color: var(--text-soft);
+    font-family:'Quicksand', sans-serif;
+    font-weight:500;
+    letter-spacing:0.05em;
+    padding: 13px 30px;
+    border-radius: 999px;
+    cursor:pointer;
+    font-size:14px;
+    transition: all 0.35s ease;
+  }
+  .reveal-btn:hover{
+    background: rgba(205,189,240,0.18);
+    border-color: rgba(205,189,240,0.7);
+    transform: translateY(-2px);
+  }
+  .reveal-btn:focus-visible{
+    outline: 2px solid var(--blush);
+    outline-offset: 3px;
+  }
+
+  .secret{
+    margin-top: 26px;
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition: all 0.7s ease;
+  }
+  .secret.open{
+    max-height: 300px;
+    opacity:1;
+  }
+  .secret p{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size: 1.35rem;
+    color: var(--moon-glow);
+    line-height:1.6;
+    padding: 20px 26px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(247,226,176,0.2);
+  }
+
+  .signoff{
+    margin-top: 40px;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size: 1.1rem;
+    color: var(--lavender);
+    opacity:0.8;
+  }
+
+  footer{
+    position:relative;
+    z-index:2;
+    margin-top: 50px;
+    font-size: 11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color: rgba(205,189,240,0.4);
+  }
+
+  @media (max-width: 480px){
+    .moon-wrap{ top:4vh; right:6vw; }
+    .moon{ width:80px; height:80px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div id="starfield"></div>
+  <div class="shooting-star"></div>
+
+  <div class="cloud" style="width:220px; height:60px; top:20%; animation-duration:60s;"></div>
+  <div class="cloud" style="width:160px; height:44px; top:55%; animation-duration:80s; animation-delay:-20s;"></div>
+
+  <div class="firefly" style="left:10%; animation-duration:14s; animation-delay:0s;">♡</div>
+  <div class="firefly" style="left:25%; animation-duration:18s; animation-delay:3s;">✦</div>
+  <div class="firefly" style="left:70%; animation-duration:16s; animation-delay:6s;">♡</div>
+  <div class="firefly" style="left:85%; animation-duration:20s; animation-delay:1s;">✦</div>
+  <div class="firefly" style="left:50%; animation-duration:15s; animation-delay:9s;">♡</div>
+
+  <div class="moon-wrap" id="moonBtn">
+    <div class="moon"></div>
+    <div class="moon-hint">sentuh bulannya</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">untuk kamu, sebelum mata terpejam</div>
+    <h1>Selamat malam,<br>sayangku</h1>
+    <p class="subtitle">cintaku, cantikku, bebyku</p>
+
+    <div class="divider"></div>
+
+    <p class="message">
+      Hari ini sudah selesai, dan kamu sudah berjuang dengan baik.
+      Sekarang saatnya rebahan, tarik selimut, pejamkan mata pelan-pelan.
+      Aku di sini, menemani lewat setiap bintang yang berkelip di layar ini,
+      mengantar kamu ke mimpi yang paling nyaman.
+    </p>
+
+    <button class="reveal-btn" id="revealBtn">buka pesan kecil 🌙</button>
+
+    <div class="secret" id="secretBox">
+      <p>Dari sekian banyak orang, aku bersyukur bisa sayang sama kamu.
+      Mimpi yang manis ya, bebyku. Besok kita cerita-cerita lagi.
+      Aku sayang kamu, sebanyak bintang yang nggak habis dihitung.</p>
+    </div>
+
+    <div class="signoff">— selamat tidur, mimpi indah 🌙</div>
+  </div>
+
+  <footer>dibuat dengan sepenuh hati</footer>
+</div>
+
+<script>
+  // Generate stars
+  const field = document.getElementById('starfield');
+  const starCount = 90;
+  for(let i=0;i<starCount;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2.2 + 0.6;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.top = Math.random()*100+'%';
+    s.style.left = Math.random()*100+'%';
+    s.style.animationDuration = (2 + Math.random()*4)+'s';
+    s.style.animationDelay = (Math.random()*5)+'s';
+    field.appendChild(s);
+  }
+
+  // Reveal button
+  const btn = document.getElementById('revealBtn');
+  const box = document.getElementById('secretBox');
+  btn.addEventListener('click', () => {
+    const isOpen = box.classList.toggle('open');
+    btn.textContent = isOpen ? 'tutup pesannya 🌙' : 'buka pesan kecil 🌙';
+  });
+
+  // Moon interaction: gentle pulse + tiny message cycle
+  const moonBtn = document.getElementById('moonBtn');
+  const hint = moonBtn.querySelector('.moon-hint');
+  const moonMsgs = [
+    'sentuh bulannya',
+    'aku sayang kamu',
+    'mimpi indah ya',
+    'peluk jauh untukmu',
+    'sampai jumpa besok'
+  ];
+  let idx = 0;
+  moonBtn.addEventListener('click', () => {
+    idx = (idx+1) % moonMsgs.length;
+    hint.textContent = moonMsgs[idx];
+    const moon = moonBtn.querySelector('.moon');
+    moon.style.transform = 'scale(1.08)';
+    setTimeout(()=> moon.style.transition='transform 0.4s ease', 10);
+    setTimeout(()=> moon.style.transform = 'scale(1)', 180);
+  });
+</script>
+
+</body>
+</html>
